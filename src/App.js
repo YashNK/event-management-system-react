@@ -1,23 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
-
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Index from "./components/index/Index";
+import Dashboard from "./components/dashboard/Dashboard";
+import EventsList from "./components/events/EventsList";
+import TasksList from "./components/tasks/TasksList";
+import HeaderComp from "./components/header/HeaderComp";
+import './App.css'
+import { useState } from "react";
+import Task from "./components/selected-event/Task";
 function App() {
+  const [importLabel, setImportLabel] = useState('')
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <HeaderComp importLabel={importLabel}/>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Index importLabel={setImportLabel}/>}/>
+          <Route path="/dashboard" element={<Dashboard importLabel={setImportLabel}/>}>
+            <Route path="" element={<EventsList/>}/>
+            <Route path="events" element={<EventsList/>}/>
+            <Route path="selected-event" element={<Task/>}/>
+            <Route path="tasks" element={<TasksList/>}/>
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }

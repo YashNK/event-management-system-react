@@ -1,0 +1,36 @@
+.header-container{
+    background-color: rgb(255, 255, 255);
+    padding: 20px;
+    position: relative;
+    box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.2);
+}
+
+.logo{
+    width: 50px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.header-title{
+    vertical-align: middle;
+    padding-left: 15px;
+    display: inline-block;
+    font-size: medium;
+}
+
+.header-import-container{
+    width: calc(100% - 310px);
+    display: inline-block;
+    vertical-align: middle;
+    text-align: right;
+}
+
+.header-import-btn{
+    cursor: pointer;
+    display: inline-block;
+    padding: 10px 30px;
+    color: white;
+    border-radius: 5px;
+    background-color: rgb(255, 55, 55);
+    font-size: medium;
+}

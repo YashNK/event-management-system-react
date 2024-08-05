@@ -1,0 +1,6 @@
+.task-container{
+    display: inline-block;
+    background-color: antiquewhite;
+    width: calc(100% - 400px);
+    margin: 20px 0px;
+}

@@ -1,0 +1,92 @@
+.events-container{
+    display: inline-block;
+    width: calc(100% - 330px);
+    height: calc(100% - 10px);
+}
+
+.table-container{
+    display: inline-block;
+    vertical-align: top;
+    position: relative;
+    overflow: auto;
+    width: 100%;
+    margin: 20px 0px 0px 0px;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0px 0px 5px 1px rgba(42, 11, 8, 0.2);
+    height: calc(100% - 40px);
+    min-height: 300px;
+    border-radius: 2px;
+}
+
+table{
+    width: 100%;
+    background-color: white;
+    border-radius: 6px;
+    border-spacing: 0;
+}
+
+tbody tr:nth-child(odd){
+    background-color: #f4ecec;
+}
+
+tr{
+    text-align: left;
+    border-bottom: 0.5px solid rgb(255, 255, 255);
+}
+
+.table-header{
+    position: sticky;
+    top: 0px;
+    padding: 15px 0px;
+    padding-left: 10px;
+    background-color: white;
+    border-bottom: 2px solid #ca3b3b;
+}
+
+.action-header{
+    text-align: center;
+    position: sticky;
+    top: 0px;
+    padding: 15px 0px;
+    background-color: white;
+    border-bottom: 2px solid #ca3b3b;
+}
+
+.row-container{
+    text-wrap: nowrap;
+    border-bottom: 1px solid rgb(233, 202, 202);
+    padding: 10px;
+}
+
+.button-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid rgb(233, 202, 202);
+    padding: 10px;
+}
+
+.action-btn{
+    cursor: pointer;
+    border-radius: 3px;
+    background: none;
+    border: none;
+    background-color: rgb(245, 126, 126);
+    color: white;
+    padding: 10px 30px;
+    transition: 0.3s;
+}
+
+.action-btn:hover{
+    background-color: rgb(248, 77, 77);
+}
+
+.action-btn-disabled{
+    cursor: pointer;
+    border-radius: 3px;
+    background: none;
+    border: none;
+    background-color: rgb(235, 204, 204);
+    color: white;
+    padding: 10px 30px;
+}

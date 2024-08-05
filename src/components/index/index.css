@@ -1,0 +1,137 @@
+.main-container{
+    background-color: rgb(249, 245, 241);
+    height: calc(100vh - 102px);
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.text-content{
+    width: 40%;
+}
+
+.text-content h3{
+    font-weight: 400;
+    font-size: medium;
+    text-align: justify;
+}
+
+.csv-form{
+    margin: 20px 0px;
+    border-radius: 5px;
+    padding: 20px;
+    background-color: white;
+}
+
+.selector-label{
+    margin: 0;
+    font-weight: 400;
+    font-size: small;
+    padding-bottom: 10px;
+}
+
+.csv-selector{
+    background-color: rgb(234, 82, 82);
+    padding: 10px;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+    margin-bottom: 20px;
+    color: white;
+    outline: none;
+    display: block;
+    border: none;
+    width: 100%;
+}
+
+.csv-selector>option{
+    display: block;
+    border-radius: 0;
+    background-color: rgb(252, 246, 246);
+    color: rgb(105, 67, 67);
+}
+
+.file-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: relative;
+    width: 400px;
+    height: 300px;
+    background-color: rgb(210, 222, 226);
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 2px dotted rgb(0, 102, 255);
+    transition: 0.3s ease-in;
+}
+
+.file-reader{
+    position: relative;
+    z-index: 2;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    position: absolute;
+    border: none;
+}
+
+.file-container:hover {
+    background-color: #b7d5e0;
+}
+
+.import-btn-label{
+    font-size: larger;
+    font-weight: 500;
+    margin: 2px;
+    display: block;
+    transition: 0.3s;
+}
+
+.import-img{
+    display: block;
+}
+
+.import-btn{
+    width: 100%;
+    border-radius: 3px;
+    padding: 10px 40px 10px 40px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+    background: linear-gradient(to left, rgb(241, 238, 238) 50%, rgb(223, 85, 85) 50%) right;
+    background-size: 200%;
+    transition: .3s ease-in-out;
+}
+
+.import-btn:hover{
+    background-position: left;
+    color: white;
+}
+
+.event-list-btn, .event-list-btn-disabled{
+    padding: 10px 25px;
+    cursor: pointer;
+    display: block;
+    margin: auto;
+    border-radius: 3px;
+    border: none;
+    transition: 0.3s;
+}
+
+.event-list-btn-disabled{
+    cursor: not-allowed;
+    opacity: 30%;
+}
+
+.event-list-btn:hover{
+    background-color: rgb(223, 85, 85);
+    color: white;
+}
