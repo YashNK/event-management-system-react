@@ -1,4 +1,4 @@
-.tasks-container{
+.tasks-list-container{
     display: inline-block;
     width: calc(100% - 330px);
     height: calc(100% - 10px);

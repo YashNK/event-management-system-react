@@ -3,7 +3,7 @@ import "./tasks.css";
 
 function TasksList() {
   const [csvData, setCsvData] = useState([]);
-
+  
   useEffect(() => {
     const data = localStorage.getItem('task');
     if (data) {
@@ -12,7 +12,7 @@ function TasksList() {
   }, []);
 
   return (
-    <div className="tasks-container">
+    <div className="tasks-list-container">
       <div className="table-container">
         <table>
           <thead>

@@ -116,9 +116,8 @@
     color: white;
 }
 
-.event-list-btn, .event-list-btn-disabled{
+.event-list-btn{
     padding: 10px 25px;
-    cursor: pointer;
     display: block;
     margin: auto;
     border-radius: 3px;
@@ -126,12 +125,28 @@
     transition: 0.3s;
 }
 
-.event-list-btn-disabled{
-    cursor: not-allowed;
-    opacity: 30%;
+.event-list-btn:not(:disabled):hover{
+    background-color: rgb(223, 85, 85);
+    cursor: pointer;
+    color: white;
 }
 
-.event-list-btn:hover{
-    background-color: rgb(223, 85, 85);
-    color: white;
+@media (max-width: 850px) {
+    .main-container{
+        overflow: auto;
+        flex-wrap: nowrap;
+        flex-direction: column;
+    }
+    .text-content{
+        margin: 20px 0px;
+        width: auto;
+        padding: 40px;
+    }
+    .csv-form{
+        width: 70%;
+        margin: 20px 0px 40px 0px;
+    }
+    .file-container{
+        width: 100%;
+    }
 }

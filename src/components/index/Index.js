@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import "./index.css";
 import UploadImg from "../../assets/upload.png";
 
-function Index({ importLabel }) {
+function Index() {
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
   let fileImportLabel = useRef('');
@@ -21,40 +21,10 @@ function Index({ importLabel }) {
   };
 
   useEffect(() => {
-    if (events || tasks) {
-      localStorage.removeItem('event');
-      localStorage.removeItem('task');
+    if (events && tasks) {
+      navigate("/dashboard")
     }
   }, []);
-
-  useEffect(() => {
-    importLabel('About Us');
-  }, [importLabel]);
-
-  const getEventStatus = (startDate, endDate) => {
-    const now = new Date();
-    if (!startDate || !endDate) {
-      return "Unknown";
-    }
-  
-    const startParts = startDate.split('-').map(part => part.trim());
-    const endParts = endDate.split('-').map(part => part.trim());
-    
-    if (startParts.length !== 3 || endParts.length !== 3) {
-      return "Unknown";
-    }
-  
-    const start = new Date(startParts.reverse().join('-'));
-    const end = new Date(endParts.reverse().join('-'));
-  
-    if (isNaN(start.getTime()) || isNaN(end.getTime())) {
-      return "Unknown";
-    }
-  
-    if (end < now) return "Event Failed";
-    if (start <= now && end >= now) return "In Progress";
-    return "Pending";
-  };
 
   const handleFileInput = (event) => {
     const csvFile = event.target.files[0];
@@ -66,10 +36,10 @@ function Index({ importLabel }) {
         const csvRows = csvText.trim().split("\n").map(row => row.trim().split(","));
         const csvFileHeaders = csvRows[0];
         setCsvHeaders(csvFileHeaders);
-  
+        
         const csvDataObjects = csvRows.slice(1).map(row => {
           return csvFileHeaders.reduce((obj, header, index) => {
-            obj[header] = row[index] ? row[index].trim() : '';
+            obj[header] = row[index].trim();
             return obj;
           }, {});
         });
@@ -80,23 +50,17 @@ function Index({ importLabel }) {
           });
           setCsvData(csvDataObjects);
         } else if (csvType === 'task') {
-          const events = JSON.parse(localStorage.getItem('event')) || [];
-          const eventsMap = events.reduce((map, event) => {
-            map[event.eventId] = event.status || 'Unknown';
-            return map;
-          }, {});
+          const eventsData = JSON.parse(localStorage.getItem('event')) || [];
           csvDataObjects.forEach(task => {
-            task.status = eventsMap[task.eventId] || 'Unknown';
+            const event = eventsData.find(e => e.eventId === task.eventId);
+            if (event) {
+              if (event.status === "Event Failed") task.status = "Task Failed"
+               else if (event.status === "Pending") task.status = "Pending"
+               else if (event.status === "In Progress") task.status = "Pending"
+               else task.status = "Unknown"
+            } else task.status = "Unknown";
           });
           setCsvData(csvDataObjects);
-        }
-  
-        if (csvType === 'event') {
-          if (handleOverlaps(csvDataObjects)) {
-            resetFileInput();
-            fileImportLabel.current.textContent = "Import CSV";
-            return;
-          }
         }
       };
       csvFileReader.readAsText(csvFile);
@@ -108,6 +72,7 @@ function Index({ importLabel }) {
   const handleImport = () => {
     if(!events && csvType !== 'event'){
       toast.warn("Please upload Event CSV file first.");
+      resetFileInput();
       return;
     }
     if (fileInputRef.current.value === "") {
@@ -116,13 +81,11 @@ function Index({ importLabel }) {
     }
     if (!validateHeaders(csvHeaders)) {
       resetFileInput();
-      fileImportLabel.current.textContent = "Import CSV";
       return;
     }
     if (csvType === 'event' && handleOverlaps(csvData)) {
       toast.error("Date overlaps detected in the event CSV.");
       resetFileInput();
-      fileImportLabel.current.textContent = "Import CSV";
       return;
     }
     if (csvType === 'event') {
@@ -130,11 +93,9 @@ function Index({ importLabel }) {
     } else if (csvType === 'task') {
       localStorage.setItem('task', JSON.stringify(csvData));
     }
-  
     toast.success("CSV data imported successfully!");
     checkBothUploaded();
     resetFileInput();
-    fileImportLabel.current.textContent = "Import CSV";
   };
 
   const validateHeaders = (headers) => {
@@ -143,10 +104,10 @@ function Index({ importLabel }) {
     if (missingHeaders.length > 2) {
       toast.error(`Wrong File Type or Invalid Headers`);
       return false;
-    } else if(missingHeaders.length == 1) {
+    } else if(missingHeaders.length === 1) {
       toast.error(`Invalid Headers. Missing: ${missingHeaders}`);
       return false;
-    } else if(missingHeaders.length == 2) {
+    } else if(missingHeaders.length === 2) {
       toast.error(`Invalid Headers. Missing: ${missingHeaders}`);
       return false;
     }
@@ -163,7 +124,6 @@ function Index({ importLabel }) {
         end: new Date(endDate.split('-').reverse().join('-'))
       };
     });
-
     for (let i = 0; i < dateRanges.length; i++) {
       for (let j = i + 1; j < dateRanges.length; j++) {
         if (dateRanges[i].start <= dateRanges[j].end && dateRanges[i].end >= dateRanges[j].start) {
@@ -173,6 +133,29 @@ function Index({ importLabel }) {
       }
     }
     return false;
+  };
+
+  const getEventStatus = (startDate, endDate) => {
+    const currentdate = new Date();
+    if (!startDate || !endDate) {
+      toast.error("No Start Date or End Date Found")
+      return;
+    }
+    const startParts = startDate.split('-').map(part => part.trim());
+    const endParts = endDate.split('-').map(part => part.trim());
+    if (startParts.length !== 3 || endParts.length !== 3) {
+      toast.error("Invalid Date Format")
+      return;
+    }
+    const start = new Date(startParts.reverse().join('-'));
+    const end = new Date(endParts.reverse().join('-'));
+    if (isNaN(start.getTime()) || isNaN(end.getTime())) {
+      toast.error("Invalid Date")
+      return;
+    }
+    if (end < currentdate) return "Event Failed";
+    if (start <= currentdate && end >= currentdate) return "In Progress";
+    return "Pending";
   };
 
   const checkBothUploaded = () => {
@@ -186,24 +169,16 @@ function Index({ importLabel }) {
   const handleCsvTypeChange = (event) => {
     setCsvType(event.target.value);
     resetFileInput();
-    fileImportLabel.current.textContent = "Import CSV"
   };
 
   const resetFileInput = () => {
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
-    }
+    if (fileInputRef.current) fileInputRef.current.value = "";
+    fileImportLabel.current.textContent = "Import CSV";
   };
 
   return (
     <>
-      <ToastContainer
-        transition={Slide}
-        position="top-center"
-        theme="colored"
-        limit={5}
-        draggable={true}
-      />
+      <ToastContainer transition={Slide} position="top-center" theme="colored" limit={5} draggable={true}/>
       <div className="main-container">
         <div className="text-content">
           <h1>Event Manager Pro</h1>
@@ -218,13 +193,7 @@ function Index({ importLabel }) {
             <option value="task">Task CSV</option>
           </select>
           <div className="file-container">
-            <input
-              className="file-reader"
-              ref={fileInputRef}
-              onChange={handleFileInput}
-              type="file"
-              accept=".csv"
-            />
+            <input className="file-reader" ref={fileInputRef} onChange={handleFileInput} type="file" accept=".csv"/>
             <img src={UploadImg} className="import-img" alt="Upload" />
             <h2 className="import-btn-label" onClick={handleImport} ref={fileImportLabel}>Import CSV</h2>
           </div>

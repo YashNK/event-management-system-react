@@ -1,0 +1,30 @@
+.sidebar-btn{
+    outline: none;
+    border: none;
+    background-color: rgb(218, 124, 124);
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    width: 100%;
+    padding: 20px 0px;
+    margin: 10px 0px;
+    border-radius: 4px;
+    display: block;
+    transition: 0.2s;
+}
+
+.sidebar-btn:hover{
+    background-color: rgb(230, 112, 112);
+    color: rgb(255, 255, 255);
+}
+
+.dashboard-sidebar{
+    overflow: auto;
+    display: inline-block;
+    vertical-align: top;
+    margin: 10px 20px 0px 0px;
+    padding: 10px 20px;
+    width: 250px;
+    height: calc(100% - 30px);
+    border-top-right-radius: 5px;
+    background-color: rgb(229, 137, 137);
+}

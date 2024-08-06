@@ -1,0 +1,58 @@
+.tasks-container{
+    display: inline-block;
+    width: calc(100% - 330px);
+    height: calc(100% - 60px);
+    margin: 10px 0px;
+    overflow-y: scroll;
+}
+
+.tasks-container::-webkit-scrollbar{
+    width: 20px;
+}
+
+.selected-event-table-container{
+    display: inline-block;
+    vertical-align: top;
+    position: relative;
+    overflow: auto;
+    width: calc(100% - 10px);
+    margin: 20px 0px 0px 0px;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0px 0px 5px 1px rgba(42, 11, 8, 0.2);
+    height: calc(100% - 120px);
+    min-height: 300px;
+    border-radius: 2px;
+}
+
+.form-save-btn{
+    outline: none;
+    display: inline-block;
+    cursor: pointer;
+    background: rgb(249, 214, 214);
+    border-radius: 4px;
+    border: 1px solid rgb(238, 131, 131);
+    margin: 0px 9px;
+    padding: 10px 30px;
+    transition: 0.3s;
+}
+
+.form-save-btn:hover{
+    background-color: #e85959;
+    color: white;
+}
+
+.tasks-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 40px 0px 1px;  
+}
+
+.tasks-header h1{
+    font-size: medium;
+    width: 50%;
+    font-weight: 500;
+    color: black;
+    display: inline-block;
+    margin: 0;
+}

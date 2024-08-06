@@ -6,15 +6,45 @@ function EventsList() {
   const [csvData, setCsvData] = useState([]);
   const navigate = useNavigate();
 
+  // Function to parse date from dd-mm-yyyy format
+  const parseDate = (dateString) => {
+    const [day, month, year] = dateString.split('-').map(Number);
+    return new Date(year, month - 1, day); // months are 0-based in JavaScript Date
+  };
+
   useEffect(() => {
+    const updateEventStatuses = (events) => {
+      const currentDate = new Date();
+
+      return events.map(event => {
+        const startDate = parseDate(event.startDate);
+        const endDate = parseDate(event.endDate);
+
+        if (event.status === 'Event Completed' || event.status === 'Event Failed') {
+          return event;
+        }
+
+        if (currentDate >= startDate && currentDate <= endDate) {
+          return { ...event, status: 'In Progress' };
+        } else if (currentDate > endDate) {
+          return { ...event, status: 'Event Failed' };
+        } else {
+          return { ...event, status: 'Pending' };
+        }
+      });
+    };
+
     const data = localStorage.getItem('event');
     if (data) {
-      setCsvData(JSON.parse(data));
+      const events = JSON.parse(data);
+      const updatedEvents = updateEventStatuses(events);
+      setCsvData(updatedEvents);
+      localStorage.setItem('event', JSON.stringify(updatedEvents)); // Save updated data back to localStorage
     }
   }, []);
 
-  const viewTasks = (index) => {
-    navigate("/dashboard/selected-event")
+  const viewTasks = (eventId) => {
+    navigate(`selected-event/${eventId}`);
   };
 
   return (
@@ -42,7 +72,7 @@ function EventsList() {
                 <td className="button-container">
                   <button
                     className="action-btn"
-                    onClick={() => viewTasks(index)}
+                    onClick={() => viewTasks(event.eventId)}
                   >
                     View Tasks
                   </button>
@@ -52,7 +82,7 @@ function EventsList() {
           </tbody>
         </table>
       </div>
-      <Outlet/>
+      <Outlet />
     </div>
   );
 }

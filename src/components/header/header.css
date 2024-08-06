@@ -3,6 +3,7 @@
     padding: 20px;
     position: relative;
     box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.2);
+    position: relative;
 }
 
 .logo{
@@ -33,4 +34,72 @@
     border-radius: 5px;
     background-color: rgb(255, 55, 55);
     font-size: medium;
+}
+
+.confirmation-pop-up-container{
+    opacity: 0;
+    display: flex;
+    z-index: -1;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    width: calc(100vw - 0px);
+    height: 100vh;
+    background-color: rgba(66, 57, 57, 40%);
+    position: absolute;
+    transition: 0.2s;
+}
+
+.confirmation-pop-up-content{
+    border-bottom: 5px solid rgb(247, 144, 144);
+    box-shadow: 1px 1px 10px 5px rgb(238, 179, 179);
+    background-color: white;
+    padding: 20px 30px 20px 30px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.confirmation-pop-up-content h1{
+    font-weight: 600;
+    width: 80%;
+    margin: 0 auto;
+    padding: 10px 0px 1px 0px;
+    font-size: large;
+}
+
+.confirmation-pop-up-content h4{
+    padding: 10px 0px 15px 0px;
+    margin: 0;
+    color: rgb(133, 133, 133);
+    font-weight: 400;
+    font-size: small;
+}
+
+.pop-up-confirm-btn, .pop-up-deny-btn{
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    padding: 10px 30px;
+    margin: 10px 0px;
+    margin-right: 10px;
+    transition: 0.3s;
+}
+
+.pop-up-deny-btn{
+    background: rgb(238, 145, 145);
+}
+
+.pop-up-confirm-btn{
+    background: rgb(243, 238, 238);
+    color: rgb(0, 0, 0);
+}
+
+.pop-up-deny-btn:hover{
+    background: rgb(241, 127, 127);
+}
+
+.pop-up-confirm-btn:hover{
+    background: rgb(245, 178, 178);
+    color: white;
 }
